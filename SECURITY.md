@@ -21,7 +21,7 @@ Honest description of how the app is built, what protects users, and what does n
 ## Known limits (stated plainly)
 
 - Data on the device is **not encrypted** and there is **no app PIN**. The phone's screen lock is the protection.
-- Backup and CSV files are **not encrypted**.
+- Backups are encrypted only if the user sets a password: AES-GCM 256-bit, key derived with PBKDF2-SHA256 (250,000 rounds), all done on the device with the browser's built-in Web Crypto. A forgotten password cannot be recovered. CSV exports are **not encrypted**.
 - The Squad code checksum is **not cryptographic**. A determined person can forge a score. The leaderboard is an honour system.
 - The CSP allows inline scripts and styles (`'unsafe-inline'`) because the app is a single file. Risk is reduced by escaping all user text and blocking outside connections.
 - Browsers can clear site storage (for example when the device is low on space, or if the user clears browsing data). Backups are the only recovery.

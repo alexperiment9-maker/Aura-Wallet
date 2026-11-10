@@ -1,6 +1,6 @@
 # Aura Wallet: Privacy Policy
 
-Version 1.1 · Effective 10 November 2026
+Version 1.2 · Effective 10 November 2026
 
 Plain-language and complete. If something here is unclear, treat the stricter reading as the intended one.
 
@@ -12,9 +12,9 @@ Plain-language and complete. If something here is unclear, treat the stricter re
 
 ## 2. What is stored, and where
 
-- Stored only on your device (browser storage called IndexedDB): your name and avatar, the monthly 'money in' figure if you enter it, budgets and categories, every spend, give and zero-spend entry, photos you attach, badges, friends' Squad cards you added, reminder time, backup date.
+- Stored only on your device (browser storage called IndexedDB): your name and avatar, the monthly 'money in' figure if you enter it, budgets and categories, every spend, give and zero-spend entry, photos you attach, badges, friends' Squad cards you added, repeating spends you set up, look and language choices, reminder time, backup date.
 - None of this is uploaded. There is no cloud copy.
-- The data is not encrypted and the app has no PIN lock. Anyone who can unlock your phone and open the app can read it. Your phone's screen lock is the protection.
+- The data on the device is not encrypted and the app has no PIN lock. Anyone who can unlock your phone and open the app can read it. Your phone's screen lock is the protection.
 
 ## 3. What the developer collects
 
@@ -29,8 +29,10 @@ Plain-language and complete. If something here is unclear, treat the stricter re
 ## 5. When data leaves your device (only if you choose)
 
 - Squad code: if you share it, it contains your name, avatar emoji, scores, give percentage, streak, level, badge count, the names and grades of your top 2 spending categories, the name of your weakest budget, and a random ID. It contains no rupee amounts, no entries and no photos. Anyone you send it to can read those details.
-- Share card image: shows the same kind of details as the Squad code, plus your avatar photo if you set one.
-- Backup file and CSV export: contain everything, including amounts and photos, unencrypted. Whoever has the file can read it. Store it somewhere you trust.
+- Share card and invite images: show the same kind of details as the Squad code, plus your avatar photo if you set one, and a link and QR code to the app.
+- Monthly recap image: shows percentages, day counts, your biggest spending category and your streak. It contains no rupee amounts.
+- Backup file: contains everything, including amounts and photos. If you set a password, the file is encrypted on your device (AES-GCM, 256-bit) and cannot be opened without that password, by anyone, including the developer. A forgotten password cannot be recovered. Without a password, the file is not encrypted and whoever has it can read it.
+- CSV export: contains your entries and amounts, not encrypted. Store it somewhere you trust.
 - Google Calendar reminder: tapping it opens Google's website. Google's policies apply there.
 - Notifications: shown by your own device. No push server is used.
 - Support / tip via UPI: tapping Pay opens your UPI app. The payment is handled by your UPI app and banks, not by Aura Wallet. As with any UPI payment, you will see the receiver's name and UPI ID, and the receiver's bank statement will show your name or UPI ID and the amount. Aura Wallet itself does not learn whether you paid.

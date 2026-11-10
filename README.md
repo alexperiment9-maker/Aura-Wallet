@@ -14,7 +14,11 @@ A free, goofy, manual expense tracker that scores you on budgeting and, most of 
 - A collectible-style stat card you can share as an image.
 - Squad: friends swap codes and are ranked by the share of their money they give, not the amount.
 - Badges, levels, streaks, daily reminder, weekly backup reminder.
-- Backup / restore and CSV export.
+- Repeating spends (rent, subscriptions, EMIs) logged automatically each month.
+- Monthly recap with a shareable story image (percentages only, no ₹ amounts).
+- Four vibes: Goofy, Nonchalant, Pookie and Chad (with Stoic quotes). Jokes in English or Hinglish.
+- Scores unlock after 3 logged days, so nobody gets free aura.
+- Backup / restore (optionally password-encrypted) and CSV export.
 - Brain food: daily money tip, quotes and a goofy dictionary of 50+ banking words (general education, not advice).
 
 ## Install
