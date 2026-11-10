@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#FFD60A">
+<title>Aura Wallet: the goofy money tracker</title>
+<meta name="description" content="Track spends. Give back. Farm aura. Free, no bank link, no login, works offline.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aura Wallet 🗿 the goofy money tracker">
+<meta property="og:description" content="Track spends. Give back. Farm aura. Free, no bank link, no login, works offline.">
+<meta property="og:image" content="https://alexperiment9-maker.github.io/Aura-Wallet/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="https://alexperiment9-maker.github.io/Aura-Wallet/welcome.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+@font-face{font-family:'Bangers';src:url(bangers.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Fredoka';font-weight:500;src:url(fredoka-500.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Fredoka';font-weight:600;src:url(fredoka-600.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Fredoka';font-weight:700;src:url(fredoka-700.woff2) format('woff2');font-display:swap}
+:root{--y:#FFD60A;--p:#FF5DA2;--c:#3DDCFF;--l:#B8F24A;--v:#A78BFA;--m:#7CF5C8;--gold:#FFC83D;--ink:#111;--paper:#FFFDF5;--sh:5px 5px 0 var(--ink)}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Fredoka',system-ui,sans-serif;font-weight:500;color:var(--ink);background:#FFE66D;overflow-x:hidden;line-height:1.45}
+.bg{position:fixed;inset:-50vmax;z-index:-2;background:repeating-conic-gradient(#FFE66D 0 10deg,#FFD23F 10deg 20deg);animation:sun 120s linear infinite}
+.bg2{position:fixed;inset:0;z-index:-1;background:radial-gradient(rgba(0,0,0,.12) 1.2px,transparent 1.3px) 0 0/10px 10px}
+@keyframes sun{to{transform:rotate(360deg)}}
+@keyframes wob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.wrap{max-width:640px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 24px) 18px 60px}
+h1,h2,.bang{font-family:'Bangers',cursive;font-weight:400;letter-spacing:1.5px;margin:0}
+h1{font-size:64px;line-height:.95;color:#fff;-webkit-text-stroke:2px var(--ink);text-shadow:5px 5px 0 var(--ink);text-align:center}
+h2{font-size:32px;margin-bottom:8px}
+.hero{text-align:center}
+.hero img{width:130px;border-radius:32px;border:4px solid var(--ink);box-shadow:var(--sh);animation:wob 3s ease-in-out infinite}
+.tag{font-size:20px;font-weight:700;margin:12px 0 4px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0}
+.chip{border:3px solid var(--ink);border-radius:999px;padding:5px 14px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 var(--ink);background:#fff}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:3px solid var(--ink);border-radius:16px;padding:14px;font-weight:700;font-size:18px;box-shadow:var(--sh);background:var(--y);margin-top:12px;text-decoration:none;color:var(--ink);cursor:pointer;font-family:inherit}
+.btn.big{font-family:'Bangers';font-size:30px;letter-spacing:1.5px;font-weight:400}
+.btn.p{background:var(--p)}.btn.w{background:#fff}.btn.c{background:var(--c)}
+.card{background:var(--paper);border:3px solid var(--ink);border-radius:20px;box-shadow:6px 6px 0 var(--ink);padding:16px 18px;margin:22px 0}
+.tl{transform:rotate(-.6deg)}.tr{transform:rotate(.6deg)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{border:3px solid var(--ink);border-radius:14px;padding:10px;background:#fff;box-shadow:3px 3px 0 var(--ink);font-size:14px}
+.f b{display:block;font-size:16px}
+.f span{font-size:28px}
+ol{padding-left:22px;margin:8px 0}li{margin:6px 0}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:3px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:3px 3px 0 var(--ink);margin:8px 0}
+.seg button{border:none;padding:10px;font-family:'Bangers';font-size:22px;letter-spacing:1px;background:#fff;cursor:pointer}
+.seg button+button{border-left:3px solid var(--ink)}
+.seg button.on{background:var(--y)}
+details{border:3px solid var(--ink);border-radius:14px;background:#fff;margin:10px 0;box-shadow:3px 3px 0 var(--ink)}
+summary{padding:10px 14px;font-weight:700;cursor:pointer}
+details p{margin:0;padding:0 14px 12px}
+.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.check span{font-size:26px;flex:none}
+#qr{display:none;text-align:center}
+#qr canvas{border:3px solid var(--ink);border-radius:12px;box-shadow:var(--sh);margin-top:8px}
+@media(min-width:700px){#qr{display:block}}
+a{color:#0b57d0}
+.mini{font-size:13px;opacity:.8}
+footer{text-align:center;font-size:13px;margin-top:30px}
+.warn{background:#FF8C8C;border:3px solid var(--ink);border-radius:14px;padding:10px 12px;font-weight:600;margin:12px 0;display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="bg2"></div>
+<div class="wrap">
+  <div class="hero">
+    <img src="icon-512.png" alt="Aura Wallet icon">
+    <h1 style="margin-top:16px">AURA WALLET</h1>
+    <p class="tag">The goofy money tracker that scores you on giving back. 🫶</p>
+    <div class="chips"><span class="chip" style="background:var(--l)">✅ Free</span><span class="chip" style="background:var(--c)">🏦 No bank link</span><span class="chip" style="background:var(--p)">🔐 No login</span><span class="chip" style="background:var(--m)">📴 Works offline</span></div>
+    <div class="warn" id="iab">⚠️ You're inside another app's browser. To install, open this page in <span class="brw">Chrome</span>: tap ⋮ or ⋯ → "Open in browser".</div>
+    <button class="btn big p" id="instBtn">📲 INSTALL THE APP</button>
+    <a class="btn w" href="./">🗿 Just open it in the browser</a>
+    <div id="qr"><p class="mini">On a computer? Scan this with your phone.</p><div id="qrBox"></div></div>
+  </div>
+
+  <div class="card tl" id="steps">
+    <h2>How to install 📲</h2>
+    <div class="seg"><button data-os="android">🤖 ANDROID</button><button data-os="ios">🍎 IPHONE</button></div>
+    <ol id="osSteps"></ol>
+  </div>
+
+  <div class="card tr">
+    <h2>What it does 🧠</h2>
+    <div class="grid">
+      <div class="f"><span>💸</span><b>Log in 3 seconds</b>Amount, category, done.</div>
+      <div class="f"><span>📊</span><b>Any budget</b>Makeup, football, drinks. Daily, weekly, monthly.</div>
+      <div class="f"><span>🫶</span><b>Give score</b>Ranked by % you give, not amount. Fair fight.</div>
+      <div class="f"><span>🃏</span><b>Your stat card</b>Aura, level, type, attacks, weakness.</div>
+      <div class="f"><span>🏆</span><b>Squad</b>Compete with friends at being a good human.</div>
+      <div class="f"><span>📖</span><b>Brain food</b>Tips, quotes and a goofy money dictionary.</div>
+    </div>
+    <p class="mini" style="margin-top:12px">Blow your whole day's budget by 10:30 AM? The app notices. Speedrun. World record. Not a flex.</p>
+  </div>
+
+  <div class="card tl">
+    <h2>Don't trust us. Check. 🔍</h2>
+    <div class="check"><span>✈️</span><div><b>Aeroplane mode test.</b> Open the app once, turn on aeroplane mode, and keep using it. It works, because there is no server to talk to.</div></div>
+    <div class="check"><span>🙅</span><div><b>It never asks for your bank, OTP, password or phone number.</b> If anything claiming to be Aura Wallet asks for those, it isn't us.</div></div>
+    <div class="check"><span>👀</span><div><b>The code is public.</b> Anyone can read every line on <a href="https://github.com/alexperiment9-maker/Aura-Wallet" target="_blank" rel="noopener noreferrer">GitHub</a>.</div></div>
+    <div class="check"><span>🔒</span><div><b>Locked down.</b> The app carries a browser security rule that blocks it from connecting to any other server.</div></div>
+  </div>
+
+  <div class="card tr">
+    <h2>Questions 🤔</h2>
+    <details><summary>Why isn't it on the Play Store or App Store?</summary><p>It's a free hobby project, and the stores charge fees and take time. Chrome and Safari can install web apps (called PWAs) straight from the browser. You get a home-screen icon, full screen and offline use, just without the store.</p></details>
+    <details><summary>Can the developer see my spending?</summary><p>No. There is no server and no account. Your entries stay on your phone. Nothing is sent unless you choose to share something, like your card image.</p></details>
+    <details><summary>Does it read my SMS or connect to my bank?</summary><p>No. You type every spend yourself. That's the point: no access to anything, and you actually feel each rupee.</p></details>
+    <details><summary>What permissions does it need?</summary><p>None to start. Photos only if you choose to attach one. Notifications only if you turn them on.</p></details>
+    <details><summary>What if I change or lose my phone?</summary><p>Your data lives only on your phone, so use Settings → Save backup now and then. The app reminds you weekly.</p></details>
+    <details><summary>Is it really free?</summary><p>Yes. No ads, no paid features. There's an optional "buy the dev a chai" tip inside. The app works the same either way.</p></details>
+    <details><summary>Is it financial advice?</summary><p>No. Scores and tips are for fun and general learning. For real money decisions, talk to a qualified professional.</p></details>
+    <details><summary>Why the moai?</summary><p>🗿</p></details>
+  </div>
+
+  <button class="btn big p" id="instBtn2">📲 GET AURA WALLET</button>
+  <button class="btn c" id="shareBtn">📤 Send this to a friend</button>
+
+  <footer>
+    <p><a href="https://github.com/alexperiment9-maker/Aura-Wallet/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer">Privacy Policy</a> · <a href="https://github.com/alexperiment9-maker/Aura-Wallet/blob/main/TERMS.md" target="_blank" rel="noopener noreferrer">Terms</a> · <a href="https://github.com/alexperiment9-maker/Aura-Wallet/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a></p>
+    <p id="credit"></p>
+    <p class="mini">An independent hobby project. Not a bank, payment app or charity. Not affiliated with any bank, UPI app, Google, Apple or GitHub. This page has no trackers.</p>
+  </footer>
+</div>
+<script src="qr.js"></script>
+<script>
+'use strict';
+const APP_URL='https://alexperiment9-maker.github.io/Aura-Wallet/';
+const SHARE_URL=APP_URL+'welcome.html';
+const CREATOR={handle:'',link:''};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const iab=/Instagram|FBAN|FBAV|FB_IAB|Snapchat|Line\/|LinkedInApp/i.test(navigator.userAgent);
+const STEPS={
+  android:['Open this page in <b>Chrome</b>. Inside WhatsApp or Instagram: ⋮ → <b>Open in Chrome</b>.','Tap <b>Install the app</b> above, or ⋮ → <b>Add to Home screen</b> → <b>Install</b>.','Wait for the 🗿 icon, then open it from your home screen.','"Could not open app"? Choose <b>Create shortcut</b> instead. Same app.'],
+  ios:['Open this page in <b>Safari</b>.','Tap <b>Share</b> (the square with an arrow ⬆️).','Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>.','Open it from the 🗿 icon. Always use the icon: Safari may clear data of websites you haven\'t opened for a while.']
+};
+function showOS(os){$$('[data-os]').forEach(b=>b.classList.toggle('on',b.dataset.os===os));$('#osSteps').innerHTML=STEPS[os].map(s=>'<li>'+s+'</li>').join('')}
+$$('[data-os]').forEach(b=>b.onclick=()=>showOS(b.dataset.os));showOS(isIOS?'ios':'android');
+if(iab){$('#iab').style.display='block';$('.brw').textContent=isIOS?'Safari':'Chrome'}
+let dp=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
+async function install(){if(dp){const p=dp;dp=null;try{p.prompt();await p.userChoice;return}catch(e){}}$('#steps').scrollIntoView({behavior:'smooth'})}
+$('#instBtn').onclick=install;$('#instBtn2').onclick=install;
+$('#shareBtn').onclick=async()=>{const text='Aura Wallet 🗿 the goofy money tracker. Free, no bank link, no login, works offline. '+SHARE_URL;
+  if(navigator.share){try{await navigator.share({title:'Aura Wallet',text,url:SHARE_URL});return}catch(e){if(e.name==='AbortError')return}}
+  try{await navigator.clipboard.writeText(text);$('#shareBtn').textContent='✅ Link copied'}catch(e){$('#shareBtn').textContent=SHARE_URL}};
+if(CREATOR.handle){const c=$('#credit');c.textContent='Made by ';const a=document.createElement(CREATOR.link?'a':'span');a.textContent=CREATOR.handle;if(CREATOR.link){a.href=CREATOR.link;a.target='_blank';a.rel='noopener noreferrer'}c.appendChild(a);c.append(' 🗿')}
+try{const q=qrcode(0,'M');q.addData(SHARE_URL);q.make();const n=q.getModuleCount(),m=3,cell=6,cv=document.createElement('canvas');cv.width=cv.height=cell*(n+m*2);const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);x.fillStyle='#111';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))x.fillRect((c+m)*cell,(r+m)*cell,cell,cell);$('#qrBox').appendChild(cv)}catch(e){}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>

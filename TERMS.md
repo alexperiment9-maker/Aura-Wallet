@@ -1,6 +1,6 @@
 # Aura Wallet: Terms of Use
 
-Version 1.0 · Effective 10 November 2026
+Version 1.1 · Effective 10 November 2026
 
 By using Aura Wallet you agree to these terms and to the Privacy Policy (PRIVACY.md). If you do not agree, do not use the app.
 
@@ -16,6 +16,7 @@ By using Aura Wallet you agree to these terms and to the Privacy Policy (PRIVACY
 ## 3. Not advice
 
 - Scores, grades, 'safe to spend' figures, messages and badges are simple calculations for fun and self-awareness. They are not financial, tax, legal or professional advice. Make money decisions using your own judgement or a qualified professional.
+- The Brain Food section (tips, quotes and the money dictionary) is general education written in a simplified, humorous way. It is the same for every user, is not tailored to your situation, may be incomplete or out of date, and rules and products differ between banks. Check with your bank or a qualified professional before acting on it.
 
 ## 4. The Give score and leaderboard
 

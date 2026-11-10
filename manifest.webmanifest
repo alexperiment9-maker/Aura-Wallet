@@ -2,6 +2,7 @@
   "name": "Aura Wallet",
   "short_name": "Aura Wallet",
   "description": "Goofy expense tracker. Give back, farm aura, beat your squad.",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

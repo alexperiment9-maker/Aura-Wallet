@@ -8,10 +8,20 @@
 <meta name="theme-color" content="#FFD60A">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Aura Wallet">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="Track spends. Give back. Farm aura. Free, no bank link, no login, works offline.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aura Wallet 🗿 the goofy money tracker">
+<meta property="og:description" content="Track spends. Give back. Farm aura. Free, no bank link, no login, works offline.">
+<meta property="og:image" content="https://alexperiment9-maker.github.io/Aura-Wallet/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="https://alexperiment9-maker.github.io/Aura-Wallet/">
+<meta name="twitter:card" content="summary_large_image">
 <title>Aura Wallet</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <style>
 @font-face{font-family:'Bangers';src:url(bangers.woff2) format('woff2');font-display:swap}
 @font-face{font-family:'Fredoka';font-weight:400;src:url(fredoka-400.woff2) format('woff2');font-display:swap}
@@ -248,6 +258,7 @@ label.f{display:block;font-weight:700;font-size:13px;margin:12px 0 5px;text-tran
 .agree{display:flex;gap:10px;align-items:flex-start;border:3px solid var(--ink);border-radius:14px;padding:10px;background:#fff;margin-top:12px;font-size:14px;font-weight:600}
 .agree input{width:24px;height:24px;flex:none;accent-color:var(--p)}
 .agree a{color:#0b57d0}
+.steps{margin:10px 0;padding-left:22px;font-weight:600;font-size:15px}.steps li{margin:7px 0}
 </style>
 </head>
 <body>
@@ -275,6 +286,7 @@ label.f{display:block;font-weight:700;font-size:13px;margin:12px 0 5px;text-tran
 <div id="toast"></div>
 <div class="loading" id="loading"><div id="loadingTxt">Cooking...</div></div>
 
+<script src="qr.js"></script>
 <script>
 'use strict';
 /* =================== CONSTANTS =================== */
@@ -323,9 +335,12 @@ const GIVE_LINES=['Real aura. Not the fake kind. 🫶','Certified good human mom
 const LOADS=['Calculating aura 📈','Consulting the moai 🗿','Skibidi processing...','Asking CA uncle 🧮','Locking in... 🔒'];
 const MOAI=['just walking','log your spends','aura farming','i saw that purchase','did you give today?','🗿','receipt or it didn\'t happen'];
 
-const LEGAL_VER="1.0";
-const LEGAL_HTML="<p class='mini'>Version 1.0 · Effective 10 November 2026</p><h2>Privacy Policy</h2><h3>1. The short version</h3><ul><li>Aura Wallet has no server, no account, no login and no connection to any bank.</li><li>Everything you enter stays in this browser on this device.</li><li>The developer does not receive, see, store, sell or share your data, and cannot do so, because the app never sends it anywhere.</li></ul><h3>2. What is stored, and where</h3><ul><li>Stored only on your device (browser storage called IndexedDB): your name and avatar, the monthly &#x27;money in&#x27; figure if you enter it, budgets and categories, every spend, give and zero-spend entry, photos you attach, badges, friends&#x27; Squad cards you added, reminder time, backup date.</li><li>None of this is uploaded. There is no cloud copy.</li><li>The data is not encrypted and the app has no PIN lock. Anyone who can unlock your phone and open the app can read it. Your phone&#x27;s screen lock is the protection.</li></ul><h3>3. What the developer collects</h3><ul><li>Nothing. No analytics, no ads, no trackers, no cookies for tracking, no crash reports, no third-party scripts. Fonts are bundled inside the app, not loaded from another company.</li></ul><h3>4. What the hosting company can see</h3><ul><li>The app&#x27;s files are downloaded from a web host (GitHub Pages). Like every website host, it can log technical details of that download, such as your IP address, browser type and time. That is under the host&#x27;s own privacy policy.</li><li>The host receives only the request for the app&#x27;s files. It never receives your entries, budgets, scores or photos.</li><li>The developer does not get access to those logs.</li></ul><h3>5. When data leaves your device (only if you choose)</h3><ul><li>Squad code: if you share it, it contains your name, avatar emoji, scores, give percentage, streak, level, badge count, the names and grades of your top 2 spending categories, the name of your weakest budget, and a random ID. It contains no rupee amounts, no entries and no photos. Anyone you send it to can read those details.</li><li>Share card image: shows the same kind of details as the Squad code, plus your avatar photo if you set one.</li><li>Backup file and CSV export: contain everything, including amounts and photos, unencrypted. Whoever has the file can read it. Store it somewhere you trust.</li><li>Google Calendar reminder: tapping it opens Google&#x27;s website. Google&#x27;s policies apply there.</li><li>Notifications: shown by your own device. No push server is used.</li><li>Support / tip via UPI: tapping Pay opens your UPI app. The payment is handled by your UPI app and banks, not by Aura Wallet. As with any UPI payment, you will see the receiver&#x27;s name and UPI ID, and the receiver&#x27;s bank statement will show your name or UPI ID and the amount. Aura Wallet itself does not learn whether you paid.</li></ul><h3>6. Other people&#x27;s Squad cards</h3><ul><li>When a friend sends you a code and you add it, their card is stored only on your device until you remove it.</li></ul><h3>7. Deleting your data</h3><ul><li>Settings → Delete everything erases all app data on this device. Clearing the browser&#x27;s site data or uninstalling does the same.</li><li>The developer holds no copy, so there is nothing for the developer to delete, export or recover.</li></ul><h3>8. Children</h3><ul><li>The app has no age-restricted content and collects nothing. If you are under 18, use it with a parent or guardian&#x27;s knowledge.</li></ul><h3>9. How you can check this yourself</h3><ul><li>After the first load, turn on aeroplane mode: the app keeps working, because it needs no server.</li><li>The app carries a browser security rule (Content Security Policy) that blocks it from connecting to any other server.</li><li>The full source code is in the public page source and can be inspected by anyone.</li></ul><h3>10. Changes</h3><ul><li>If the app ever changes in a way that affects privacy, this policy will be updated and the app will ask you to accept it again before continuing.</li></ul><h2 style='margin-top:18px'>Terms of Use</h2><p>By using Aura Wallet you agree to these terms and to the Privacy Policy above. If you do not agree, do not use the app.</p><h3>1. What this app is</h3><ul><li>A free personal tool to manually note spending and giving, with scores, badges and jokes for motivation.</li><li>It is not a bank, wallet, payment app, accounting product, tax tool or financial adviser. The name &#x27;wallet&#x27; is a nickname. It holds no money.</li></ul><h3>2. No bank connection, manual entry</h3><ul><li>The app does not read your bank, SMS, UPI or card activity. Every number is typed by you. It is only as accurate as what you enter.</li></ul><h3>3. Not advice</h3><ul><li>Scores, grades, &#x27;safe to spend&#x27; figures, messages and badges are simple calculations for fun and self-awareness. They are not financial, tax, legal or professional advice. Make money decisions using your own judgement or a qualified professional.</li></ul><h3>4. The Give score and leaderboard</h3><ul><li>&#x27;Give&#x27; entries are self-reported. The app does not collect, process, verify or forward any donation, and is not a charity or fundraising platform.</li><li>Give records are not donation receipts and have no tax value.</li><li>The Squad ranking is an honour-system game between friends. There are no prizes, no money and nothing to win. Scores can be wrong or made up by whoever enters them.</li><li>Give only what you can comfortably afford. Do not harm your own finances for a score.</li></ul><h3>5. Humour</h3><ul><li>The app uses deadpan and meme-style jokes about spending. They are generated by simple rules, apply the same to everyone, and are not a judgement of you. If you do not enjoy that style, please do not use the app.</li></ul><h3>6. Your data is your responsibility</h3><ul><li>Data exists only on your device. It can be lost if you clear browser data, uninstall, reset or lose the phone, or if the browser removes site storage.</li><li>The app reminds you to back up, but making and safely keeping backups is up to you. Lost data cannot be recovered by the developer.</li><li>Anything you choose to share (Squad code, card image, backup, export) is shared by you, at your own choice.</li></ul><h3>7. Supporting the developer (optional tip)</h3><ul><li>Tips are voluntary gifts to the individual who made the app. They are not a purchase, subscription, investment or charitable donation.</li><li>A tip unlocks nothing. The app works the same whether or not you tip.</li><li>Tips are paid through your own UPI app and are generally not refundable. Check the amount and receiver in your UPI app before confirming.</li></ul><h3>8. No warranty</h3><ul><li>The app is provided free, &#x27;as is&#x27; and &#x27;as available&#x27;, without warranties of any kind, including accuracy, reliability, availability or fitness for a particular purpose. It may contain bugs and may change or stop being offered at any time.</li></ul><h3>9. Limit of liability</h3><ul><li>To the fullest extent permitted by law, the developer is not liable for any loss or damage arising from use of, or inability to use, the app. This includes loss of data, wrong calculations, financial decisions made using the app, missed reminders, and anything resulting from files or codes you chose to share.</li><li>Nothing here removes rights that the law does not allow to be removed.</li></ul><h3>10. Acceptable use</h3><ul><li>Use the app lawfully and for yourself. Do not use it to mislead others, for example by presenting app records as official receipts or proof of donation.</li></ul><h3>11. Not affiliated</h3><ul><li>Aura Wallet is an independent hobby project. It is not affiliated with, endorsed by or connected to any bank, UPI app, payment network, Google, GitHub, or any game or trading-card brand. All names and trademarks belong to their owners.</li></ul><h3>12. Fonts and licences</h3><ul><li>The fonts Bangers and Fredoka are used under the SIL Open Font License. Emoji are drawn by your device.</li></ul><h3>13. Governing law</h3><ul><li>These terms are governed by the laws of India. Courts at Pune, Maharashtra have jurisdiction, subject to any rights you have under applicable consumer law.</li></ul><h3>14. Changes and contact</h3><ul><li>If these terms change in a meaningful way, the app will ask you to accept them again.</li><li>Questions or concerns: contact the developer through the page or person you received the app link from.</li></ul>";
+const LEGAL_VER="1.1";
+const LEGAL_HTML="<p class='mini'>Version 1.1 · Effective 10 November 2026</p><h2>Privacy Policy</h2><h3>1. The short version</h3><ul><li>Aura Wallet has no server, no account, no login and no connection to any bank.</li><li>Everything you enter stays in this browser on this device.</li><li>The developer does not receive, see, store, sell or share your data, and cannot do so, because the app never sends it anywhere.</li></ul><h3>2. What is stored, and where</h3><ul><li>Stored only on your device (browser storage called IndexedDB): your name and avatar, the monthly &#x27;money in&#x27; figure if you enter it, budgets and categories, every spend, give and zero-spend entry, photos you attach, badges, friends&#x27; Squad cards you added, reminder time, backup date.</li><li>None of this is uploaded. There is no cloud copy.</li><li>The data is not encrypted and the app has no PIN lock. Anyone who can unlock your phone and open the app can read it. Your phone&#x27;s screen lock is the protection.</li></ul><h3>3. What the developer collects</h3><ul><li>Nothing. No analytics, no ads, no trackers, no cookies for tracking, no crash reports, no third-party scripts. Fonts are bundled inside the app, not loaded from another company.</li></ul><h3>4. What the hosting company can see</h3><ul><li>The app&#x27;s files are downloaded from a web host (GitHub Pages). Like every website host, it can log technical details of that download, such as your IP address, browser type and time. That is under the host&#x27;s own privacy policy.</li><li>The host receives only the request for the app&#x27;s files. It never receives your entries, budgets, scores or photos.</li><li>The developer does not get access to those logs.</li></ul><h3>5. When data leaves your device (only if you choose)</h3><ul><li>Squad code: if you share it, it contains your name, avatar emoji, scores, give percentage, streak, level, badge count, the names and grades of your top 2 spending categories, the name of your weakest budget, and a random ID. It contains no rupee amounts, no entries and no photos. Anyone you send it to can read those details.</li><li>Share card image: shows the same kind of details as the Squad code, plus your avatar photo if you set one.</li><li>Backup file and CSV export: contain everything, including amounts and photos, unencrypted. Whoever has the file can read it. Store it somewhere you trust.</li><li>Google Calendar reminder: tapping it opens Google&#x27;s website. Google&#x27;s policies apply there.</li><li>Notifications: shown by your own device. No push server is used.</li><li>Support / tip via UPI: tapping Pay opens your UPI app. The payment is handled by your UPI app and banks, not by Aura Wallet. As with any UPI payment, you will see the receiver&#x27;s name and UPI ID, and the receiver&#x27;s bank statement will show your name or UPI ID and the amount. Aura Wallet itself does not learn whether you paid.</li></ul><h3>6. Other people&#x27;s Squad cards</h3><ul><li>When a friend sends you a code and you add it, their card is stored only on your device until you remove it.</li></ul><h3>7. Deleting your data</h3><ul><li>Settings → Delete everything erases all app data on this device. Clearing the browser&#x27;s site data or uninstalling does the same.</li><li>The developer holds no copy, so there is nothing for the developer to delete, export or recover.</li></ul><h3>8. Children</h3><ul><li>The app has no age-restricted content and collects nothing. If you are under 18, use it with a parent or guardian&#x27;s knowledge.</li></ul><h3>9. How you can check this yourself</h3><ul><li>After the first load, turn on aeroplane mode: the app keeps working, because it needs no server.</li><li>The app carries a browser security rule (Content Security Policy) that blocks it from connecting to any other server.</li><li>The full source code is in the public page source and can be inspected by anyone.</li></ul><h3>10. Changes</h3><ul><li>If the app ever changes in a way that affects privacy, this policy will be updated and the app will ask you to accept it again before continuing.</li></ul><h2 style='margin-top:18px'>Terms of Use</h2><p>By using Aura Wallet you agree to these terms and to the Privacy Policy above. If you do not agree, do not use the app.</p><h3>1. What this app is</h3><ul><li>A free personal tool to manually note spending and giving, with scores, badges and jokes for motivation.</li><li>It is not a bank, wallet, payment app, accounting product, tax tool or financial adviser. The name &#x27;wallet&#x27; is a nickname. It holds no money.</li></ul><h3>2. No bank connection, manual entry</h3><ul><li>The app does not read your bank, SMS, UPI or card activity. Every number is typed by you. It is only as accurate as what you enter.</li></ul><h3>3. Not advice</h3><ul><li>Scores, grades, &#x27;safe to spend&#x27; figures, messages and badges are simple calculations for fun and self-awareness. They are not financial, tax, legal or professional advice. Make money decisions using your own judgement or a qualified professional.</li><li>The Brain Food section (tips, quotes and the money dictionary) is general education written in a simplified, humorous way. It is the same for every user, is not tailored to your situation, may be incomplete or out of date, and rules and products differ between banks. Check with your bank or a qualified professional before acting on it.</li></ul><h3>4. The Give score and leaderboard</h3><ul><li>&#x27;Give&#x27; entries are self-reported. The app does not collect, process, verify or forward any donation, and is not a charity or fundraising platform.</li><li>Give records are not donation receipts and have no tax value.</li><li>The Squad ranking is an honour-system game between friends. There are no prizes, no money and nothing to win. Scores can be wrong or made up by whoever enters them.</li><li>Give only what you can comfortably afford. Do not harm your own finances for a score.</li></ul><h3>5. Humour</h3><ul><li>The app uses deadpan and meme-style jokes about spending. They are generated by simple rules, apply the same to everyone, and are not a judgement of you. If you do not enjoy that style, please do not use the app.</li></ul><h3>6. Your data is your responsibility</h3><ul><li>Data exists only on your device. It can be lost if you clear browser data, uninstall, reset or lose the phone, or if the browser removes site storage.</li><li>The app reminds you to back up, but making and safely keeping backups is up to you. Lost data cannot be recovered by the developer.</li><li>Anything you choose to share (Squad code, card image, backup, export) is shared by you, at your own choice.</li></ul><h3>7. Supporting the developer (optional tip)</h3><ul><li>Tips are voluntary gifts to the individual who made the app. They are not a purchase, subscription, investment or charitable donation.</li><li>A tip unlocks nothing. The app works the same whether or not you tip.</li><li>Tips are paid through your own UPI app and are generally not refundable. Check the amount and receiver in your UPI app before confirming.</li></ul><h3>8. No warranty</h3><ul><li>The app is provided free, &#x27;as is&#x27; and &#x27;as available&#x27;, without warranties of any kind, including accuracy, reliability, availability or fitness for a particular purpose. It may contain bugs and may change or stop being offered at any time.</li></ul><h3>9. Limit of liability</h3><ul><li>To the fullest extent permitted by law, the developer is not liable for any loss or damage arising from use of, or inability to use, the app. This includes loss of data, wrong calculations, financial decisions made using the app, missed reminders, and anything resulting from files or codes you chose to share.</li><li>Nothing here removes rights that the law does not allow to be removed.</li></ul><h3>10. Acceptable use</h3><ul><li>Use the app lawfully and for yourself. Do not use it to mislead others, for example by presenting app records as official receipts or proof of donation.</li></ul><h3>11. Not affiliated</h3><ul><li>Aura Wallet is an independent hobby project. It is not affiliated with, endorsed by or connected to any bank, UPI app, payment network, Google, GitHub, or any game or trading-card brand. All names and trademarks belong to their owners.</li></ul><h3>12. Fonts and licences</h3><ul><li>The fonts Bangers and Fredoka are used under the SIL Open Font License. Emoji are drawn by your device.</li></ul><h3>13. Governing law</h3><ul><li>These terms are governed by the laws of India. Courts at Pune, Maharashtra have jurisdiction, subject to any rights you have under applicable consumer law.</li></ul><h3>14. Changes and contact</h3><ul><li>If these terms change in a meaningful way, the app will ask you to accept them again.</li><li>Questions or concerns: contact the developer through the page or person you received the app link from.</li></ul>";
 function openLegal(){$('#legalBody').innerHTML=LEGAL_HTML;$('#legalBody').scrollTop=0;$('#legal').classList.add('show')}
+const TIPS=["Pay yourself first. Move savings out the day money comes in. What's left is spending money. Not the other way round.", "The 50/30/20 rule of thumb: about 50% needs, 30% wants, 20% savings. It's a guide, not a law. Nobody's arresting you.", "Build an emergency fund: aim for 3 to 6 months of expenses. Start with one month. Future you is begging.", "Credit card? Pay the FULL bill, not the 'minimum due'. Minimum due is a trap wearing a friendly hat.", "Wait 24 hours before any unplanned buy. If you still want it tomorrow, fine. Usually you won't. The cart forgets.", "Small daily spends are sneaky. ₹100 a day is ₹3,000 a month. That chai-samosa combo has a salary.", "Never share your OTP or UPI PIN. Not with 'the bank', not with 'customer care', not with your crush.", "You enter your UPI PIN only to SEND money. Never to receive. If someone says otherwise, that's a scam. Run.", "Before taking an EMI, add up the total you'll pay, not just the monthly amount. Monthly looks cute. Total does not.", "'No-cost EMI' can still have fees or a lost discount. Read the fine print. The print is fine for a reason.", "Cancel subscriptions you forgot about. If you can't remember the last time you used it, it's using you.", "Compare price per gram / per litre, not per pack. Big pack is not always big brain.", "Don't shop hungry, sad, or at 2 AM. All three versions of you have terrible judgement.", "Set a budget for fun too. A budget with zero fun gets abandoned by Thursday.", "Start saving early, even tiny amounts. Compounding needs time more than it needs money.", "Keep savings in a separate account from spending. Out of sight, out of swipe.", "Have health insurance before you need it. Hospitals do not accept aura.", "Add a nominee to your bank accounts. It takes 2 minutes and saves your family months.", "Lending to friends? Only lend what you're okay never seeing again. Peace of mind is also an asset.", "Check your bank statement once a month. Wrong charges exist. Banks are not the moai. They make mistakes.", "A sale saves money only if you were going to buy it anyway. Otherwise it's just spending with extra steps.", "Giving doesn't need to be big. Small and regular beats big and never. Your Give score agrees."];
+const QUOTES=[["A rupee saved is a rupee you don't have to earn again.", "the moai"], ["Do not save what is left after spending; spend what is left after saving.", "old money wisdom"], ["Beware of little expenses. A small leak will sink a great ship.", "Benjamin Franklin"], ["Cut your coat according to your cloth.", "proverb"], ["Budget: telling your money where to go, instead of wondering where it went.", "popular saying"], ["Too many people spend money they haven't earned, to buy things they don't want, to impress people they don't like.", "often quoted, source disputed"], ["It's not your salary that makes you rich. It's your spending habits.", "popular saying"], ["Boond boond se sagar banta hai. Drop by drop, an ocean.", "Hindi proverb"], ["Jitni chadar ho, utne pair pasaro. Stretch your legs only as far as your blanket.", "Hindi proverb"], ["My wallet is like an onion. Opening it makes me cry.", "unknown, relatable"], ["Money can't buy happiness. But it's more comfortable to cry in an auto than on a bus.", "the moai, deadpan"], ["Being broke is temporary. Screenshots of your 2 AM cart are forever.", "the moai"], ["Rich is not what you earn. It's what you keep. And what you give.", "Aura Wallet"], ["The best time to start saving was last year. The second best time is before the next sale.", "the moai"], ["No one has ever become poor by giving.", "often attributed to Anne Frank"], ["We make a living by what we get. We make a life by what we give.", "often quoted, source disputed"]];
+const DICT=[["UPI", "Unified Payments Interface", "Instant bank-to-bank money transfer from your phone. India's favourite sport after cricket."], ["UPI ID", "also called VPA", "Your payment address, like name@bank. People pay you on it without knowing your account number."], ["UPI PIN", "", "The secret number that approves a UPI payment. You enter it only to SEND money. Share it with nobody. Not even the moai."], ["OTP", "One-Time Password", "A code sent to your phone to confirm it's really you. Works once. Your bank will never call and ask for it."], ["KYC", "Know Your Customer", "The ID check banks must do before serving you. Annoying. Also the reason random people can't open accounts in your name."], ["IFSC", "Indian Financial System Code", "An 11-character code for a bank branch. Needed for bank transfers. Like a PIN code, but for branches."], ["NEFT", "National Electronic Funds Transfer", "Bank transfer that goes in batches. Reliable. Not in a hurry."], ["IMPS", "Immediate Payment Service", "Instant bank transfer, any time, any day. NEFT's impatient cousin."], ["RTGS", "Real Time Gross Settlement", "Instant transfer meant for large amounts. For when you're moving serious money. Must be nice."], ["Savings account", "", "The normal account for keeping money. Pays a little interest. Emphasis on little."], ["Current account", "", "An account for businesses with lots of transactions. Usually pays no interest. All work, no reward."], ["Interest", "", "The price of money. You EARN it on savings. You PAY it on loans. Pick the right side."], ["Compound interest", "", "Interest on your interest. On savings it's magic. On debt it's a horror film."], ["Principal", "", "The original amount you saved or borrowed, before interest got involved."], ["FD", "Fixed Deposit", "You lock money with the bank for a set time and get a fixed interest. Money in a time-out, growing quietly."], ["RD", "Recurring Deposit", "You deposit a fixed amount every month and earn interest. An FD on a monthly subscription."], ["EMI", "Equated Monthly Instalment", "A loan paid back in equal monthly chunks. Each chunk is small. The total is not."], ["Tenure", "", "How long a loan or deposit runs. Longer loan tenure = smaller EMI but more total interest."], ["Credit score", "CIBIL is one such score", "A number, usually 300 to 900, showing how reliably you repay. Higher is better. Banks check it before lending. It's your financial aura."], ["Credit card", "", "A card that spends the bank's money first. You repay later. Free if paid in full on time. Expensive if not."], ["Minimum due", "", "The smallest amount you must pay on a card bill to avoid a late fee. Interest still runs on the rest. A trap in a friendly hat."], ["Credit limit", "", "The maximum you can spend on a credit card. A limit, not a target."], ["Debit card", "", "A card that spends YOUR money straight from your account. No money, no swipe. Honest."], ["Overdraft", "", "Letting your account go below zero, as a short loan from the bank. Comes with interest or charges."], ["Mandate / Autopay", "", "Permission you give for money to be taken automatically, like subscriptions or EMIs. Check your list sometimes. Ghosts live there."], ["Inflation", "", "Prices going up over time, so the same money buys less. Why samosas aren't ₹5 any more."], ["Mutual fund", "", "Many people's money pooled and invested by a professional. Returns are not guaranteed. Read before you leap."], ["SIP", "Systematic Investment Plan", "Investing a fixed amount in a mutual fund at regular intervals, usually monthly. Discipline, automated."], ["Shares / Stocks", "", "Tiny pieces of ownership in a company. Value goes up and down. So will your mood."], ["Demat account", "", "A digital locker that holds your shares and investments. No paper certificates."], ["PPF", "Public Provident Fund", "A government-backed long-term savings scheme with a 15-year lock-in. Patience, the product."], ["EPF / PF", "Employees' Provident Fund", "Retirement savings cut from your salary every month. Your employer adds to it too. Forced adulting."], ["PAN", "Permanent Account Number", "Your 10-character tax ID. Needed for taxes, big transactions and most money paperwork."], ["TDS", "Tax Deducted at Source", "Tax cut before the money even reaches you. The government eats first."], ["ITR", "Income Tax Return", "The yearly form telling the tax department what you earned and paid. Once a year, everyone panics together."], ["GST", "Goods and Services Tax", "Tax added to most things you buy. That extra line on the bill you pretend not to see."], ["Premium", "", "What you pay regularly to keep an insurance policy active."], ["Term insurance", "", "Life cover for a fixed period. Pays your family if you die in that time. No payout if you survive. Cheapest real protection."], ["Health insurance", "", "Pays hospital bills up to a limit. Buy it before you need it. Hospitals do not accept aura."], ["Nominee", "", "The person who receives your money if you die. Add one to every account. Two minutes now saves months later."], ["Emergency fund", "", "Money kept aside only for real emergencies. A sale is not an emergency."], ["Asset", "", "Something you own that has value: savings, gold, property. Your sneaker collection is debatable."], ["Liability", "", "Something you owe: loans, card dues, the ₹500 you borrowed from Rahul."], ["Net worth", "", "Everything you own minus everything you owe. Can be negative. Don't panic. Do plan."], ["Cashback", "", "A small part of your spend returned to you. Nice, but spending ₹1,000 to get ₹20 back is not saving."], ["No-cost EMI", "", "EMI with no visible interest. The cost can hide as a lost discount or a fee. Read the fine print."], ["BNPL", "Buy Now, Pay Later", "Short-term credit at checkout. It's a loan wearing sunglasses. Miss a payment and there are charges."], ["Collateral", "", "Something valuable you pledge for a loan. Don't repay, and the lender can take it."], ["Guarantor", "", "A person who promises to repay your loan if you don't. Think very hard before becoming one."], ["Cheque bounce", "", "A cheque that fails because there isn't enough money in the account. Has penalties and can be a legal offence."], ["Bank statement", "", "The list of everything that went in and out of your account. Read it monthly. Plot twists guaranteed."], ["Phishing", "", "Fake messages or sites pretending to be your bank to steal your details. If it's urgent, scary and has a link, it's bait."]];
 /* ====== CREATOR SUPPORT: put your UPI ID + name here. Empty upi = page hidden ====== */
 const DONATE={upi:'mukeshpattta@okicici',name:'Aura Wallet',note:'Aura Wallet support'};
 /* =================== UTILS =================== */
@@ -382,7 +397,7 @@ function sanitizeSettings(raw){
     .filter(c=>{const k=c.name.toLowerCase();if(seen.has(c.id)||seen.has('n:'+k))return false;seen.add(c.id);seen.add('n:'+k);return true});
   if(!cats.find(c=>c.id==='other'))cats.push({...OTHER});
   s.cats=cats;s.badges=s.badges&&typeof s.badges==='object'?s.badges:{};s.squad=Array.isArray(s.squad)?s.squad.filter(x=>x&&x.i&&x.i!==s.uid):[];
-  s.xpBonus=Math.max(0,parseInt(s.xpBonus)||0);s.seen=s.seen&&typeof s.seen==='object'?s.seen:{};
+  s.xpBonus=Math.max(0,parseInt(s.xpBonus)||0);if(!s.baseline||typeof s.baseline!=='object'||Array.isArray(s.baseline))s.baseline={};s.seen=s.seen&&typeof s.seen==='object'?s.seen:{};
   if(!/^\d{2}:\d{2}$/.test(s.remind))s.remind='21:30';
   if(!validYmd(s.lastBackup||''))s.lastBackup='';if(!validYmd(s.backupSnooze||''))s.backupSnooze='';
   return s;
@@ -546,7 +561,7 @@ function render(){
   $('#plusBtn').classList.toggle('angry',nagNeeded());
   if(lastLevel!=null&&c.lv.l>lastLevel){queueCeleb(`<div style="text-align:center;font-size:90px">🆙</div><h2>LEVEL ${c.lv.l}!</h2><p>Power level rising. Wallet... also falling.</p>`,()=>{boom('🆙');rain(['⭐','✨','🆙'],30)})}
   lastLevel=c.lv.l;
-  ({home:renderHome,budgets:renderBudgets,card:renderCard,squad:renderSquad,settings:renderSettings,history:renderHistory,support:renderSupport})[cur](c);
+  ({home:renderHome,budgets:renderBudgets,card:renderCard,squad:renderSquad,settings:renderSettings,history:renderHistory,support:renderSupport,learn:renderLearn})[cur](c);
   popAll();countUp();bindTilt();
 }
 function nagNeeded(){if(!S.setup)return false;if(E.some(e=>e.date===today()))return false;const[h,m]=S.remind.split(':').map(Number);const n=new Date();return n.getHours()*60+n.getMinutes()>=Math.min(h*60+m,19*60)}
@@ -573,6 +588,7 @@ function renderHome(c){
   const overall=c.sc.filter(s=>!s.cat);
   const spentToday=E.some(e=>e.type==='spend'&&e.date===t);const checked=E.some(e=>e.type==='nospend'&&e.date===t);
   $('#view').innerHTML=`
+  ${installDue()?`<div class="nag" style="background:var(--c);color:var(--ink)"><span style="font-size:28px">📲</span><div>Install the app<br><small>Full screen, works offline${isIOS()?', keeps your data safer on iPhone':''}.</small></div><div style="margin-left:auto;display:flex;flex-direction:column;gap:6px;flex:none"><button id="inNow" style="margin:0">Install</button><button id="inLater" style="margin:0;background:#fff">Later</button></div></div>`:''}
   ${(()=>{const b=backupInfo();return b.due?`<div class="nag" style="background:var(--v);color:var(--ink)"><span style="font-size:28px">🛟</span><div>${b.never?'Never backed up.':'Last backup: '+b.days+' days ago.'}<br><small>${E.length} entries live only on this phone. One drop in the toilet and it's over. 🚽</small></div><div style="margin-left:auto;display:flex;flex-direction:column;gap:6px;flex:none"><button id="bkNow" style="margin:0">Back up</button><button id="bkLater" style="margin:0;background:#fff">Later</button></div></div>`:''})()}
   ${nagNeeded()?`<div class="nag"><span style="font-size:28px">🚨</span><div>Nothing logged today.<br><small>The moai is disappointed. 🗿</small></div><button onclick="openAdd()">Log now</button></div>`:''}
   <div class="grid2">
@@ -593,7 +609,12 @@ function renderHome(c){
     <div class="secthead" style="margin:0 0 6px"><h2 style="color:var(--ink);-webkit-text-stroke:0;text-shadow:none;font-size:24px">Recent 🧾</h2><button class="chip" onclick="go('history')">See all →</button></div>
     ${recent.length?recent.map(entHTML).join(''):`<div class="empty"><span class="e">🦗</span><p>No entries. Just vibes. Tap + to start.</p></div>`}
   </div>
+  <div class="card tl" style="background:#EFFFD0;cursor:pointer" id="tipCard"><div class="secthead" style="margin:0 0 4px"><h2 style="color:var(--ink);-webkit-text-stroke:0;text-shadow:none;font-size:22px">Tip of the day 💡</h2><span class="chip" style="font-size:12px;padding:3px 9px">🧠 More →</span></div>
+    <div style="font-weight:600;font-size:15px">${esc(TIPS[dayNum()%TIPS.length])}</div>
+    <div class="mini" style="margin-top:8px">💬 "${esc(QUOTES[dayNum()%QUOTES.length][0])}" — ${esc(QUOTES[dayNum()%QUOTES.length][1])}</div></div>
   <div class="card tr" style="text-align:center"><div class="bang" style="font-size:22px">${esc(pick(HELLO))}</div><div class="mini">Aura ${c.aura} · ${c.rar[1]} ${c.rar[2]} · ${TYPES[c.tk].e} ${TYPES[c.tk].n} type</div></div>`;
+  $('#tipCard').onclick=()=>go('learn');
+  const inb=$('#inNow');if(inb){inb.onclick=doInstall;$('#inLater').onclick=async()=>{S.seen.instHide=today();await saveS();toast('Later it is. The moai will ask again. 🗿');render()}}
   const bn=$('#bkNow');if(bn){bn.onclick=()=>backup();$('#bkLater').onclick=async()=>{S.backupSnooze=today();await saveS();toast('Fine. Tomorrow then. The moai will remember. 🗿');render()}}
   const ns=$('#noSpend');if(ns)ns.onclick=async ev=>{const e={id:uid(),type:'nospend',date:today(),created:Date.now(),time:Date.now(),note:''};await dbPut('entries',e);E.push(e);
     const r=ev.target.getBoundingClientRect();floater('+15 XP',r.left+r.width/2,r.top);confetti(r.left+r.width/2,r.top,['🧊','🧘','✨']);toast('Zero spend. Monk behaviour. 🧘');afterChange()};
@@ -762,11 +783,39 @@ function editCat(cat,onDone){
   draw();
 }
 
+/* =================== QUICK START =================== */
+let QS={f:1};
+function quickStart(){
+  const base=S.baseline&&typeof S.baseline==='object'?S.baseline:{};
+  const vals={};S.cats.forEach(c=>vals[c.id]=base[c.id]||'');
+  const draw=()=>{modal(`<div style="text-align:center;font-size:60px">⚡</div><h2>Quick start</h2>
+    <p class="mini">Roughly how much do you spend on each in a normal month? Guess. Nobody's checking. Leave blank to skip.</p>
+    ${S.cats.map(c=>`<div class="row" style="align-items:center;margin-top:8px"><div style="flex:0 0 44px;height:44px;border:2.5px solid var(--ink);border-radius:12px;background:${c.color};display:grid;place-items:center;font-size:22px">${c.emoji}</div><div style="flex:1.2;font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.name)}</div><input class="inp" style="flex:1.3;padding:8px 10px" type="number" inputmode="decimal" min="0" placeholder="₹ / month" data-qs="${esc(c.id)}" value="${esc(vals[c.id])}"></div>`).join('')}
+    <label class="f">How strict?</label>
+    <div class="chips">${[[1,'😌 Same as usual'],[.9,'🔥 10% tighter'],[.8,'💀 20% tighter']].map(([f,n])=>`<button class="chip ${QS.f===f?'on':''}" data-qf="${f}" style="${QS.f===f?'background:var(--y)':''}">${n}</button>`).join('')}</div>
+    <div id="qsSum" style="margin-top:16px"></div>
+    <button class="btn mega l" id="qsGo">SET MY BUDGETS</button>
+    <p class="mini">This sets a budget for each category you fill in, plus a monthly and daily total. You can change any of them later in Budgets.</p>
+    <button class="btn w sm" onclick="closeModal()">Not now</button>`);
+    const keep=()=>$$('[data-qs]').forEach(i=>vals[i.dataset.qs]=i.value);
+    const sum=()=>{keep();let t=0,bad=false;for(const k in vals){if(vals[k]==='')continue;const v=money(vals[k]);if(v===null)bad=true;else t+=v}
+      $('#qsSum').innerHTML=bad?'<div class="mini" style="text-align:center;color:#c00">Numbers only, 0 or more 🧮</div>':t?`<div style="border:3px solid var(--ink);border-radius:14px;background:#EFFFD0;padding:10px 12px;box-shadow:3px 3px 0 var(--ink)"><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Your plan</div><div class="row" style="align-items:flex-end;margin-top:4px;text-align:center"><div><div class="mini" style="margin:0">Usual month</div><div class="bang" style="font-size:24px">${inr(t)}</div></div><div style="flex:0 0 20px;font-size:20px">→</div><div><div class="mini" style="margin:0">New budget</div><div class="bang" style="font-size:24px">${inr(t*QS.f)}</div></div><div><div class="mini" style="margin:0">Per day</div><div class="bang" style="font-size:24px">${inr(t*QS.f/30)}</div></div></div></div>`:'';return{t,bad}};
+    $$('[data-qs]').forEach(i=>i.oninput=sum);sum();
+    $$('[data-qf]').forEach(b=>b.onclick=()=>{keep();QS.f=+b.dataset.qf;draw()});
+    $('#qsGo').onclick=async()=>{const{t,bad}=sum();if(bad){toast('Numbers only, ≥ 0 🧮','warn');return}if(!t){toast('Fill at least one. Even a guess. 🤷','warn');return}
+      const nice=(v,st)=>Math.max(st,Math.round(v/st)*st);const div={daily:30,weekly:30/7,monthly:1};S.baseline={};let n=0;
+      for(const c of S.cats){const v=vals[c.id]===''?0:money(vals[c.id]);if(!v)continue;S.baseline[c.id]=v;c.budget=nice(v*QS.f/div[c.period],c.period==='daily'?10:50);n++}
+      S.overall.monthly=nice(t*QS.f,100);S.overall.daily=nice(t*QS.f/30,10);
+      if(!S.seen.qs){S.seen.qs=today();S.xpBonus=(S.xpBonus||0)+50}
+      await saveS();closeModal();boom('⚡');rain(['⚡','📊','✨'],22);floater('+50 XP');toast(`${n} budgets set. ${QS.f<1?'Tighter than usual. Brave. 🫡':'Discipline arc begins. 🧘'}`);cur='budgets';$$('nav [data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go==='budgets'));afterChange()};
+  };draw();
+}
 /* =================== BUDGETS =================== */
 function renderBudgets(c){
   const rows=S.cats.map(cat=>{const s=c.sc.find(x=>x.key==='cat-'+cat.id);const[a,b]=periodRange(cat.period);return{cat,s,spent:sumSpend(a,b,cat.id)}});
   const overall=c.sc.filter(s=>!s.cat);
   $('#view').innerHTML=`<div class="secthead"><h2>Budgets 📊</h2><button class="chip" style="background:var(--l)" id="bNew">➕ New</button></div>
+  <button class="btn g" id="bQs" style="margin:-2px 0 16px">⚡ Quick start: set all budgets from a rough guess</button>
   <div class="card tl"><h2>Total limits 🧮</h2>
     ${overall.length?overall.map(s=>barHTML(s)).join(''):'<p class="mini" style="margin-top:0">No total limit yet. Set daily / weekly / monthly below.</p>'}
     <div class="row">${['daily','weekly','monthly'].map(p=>`<div><label class="f">${p}</label><input class="inp" type="number" inputmode="decimal" min="0" data-ov="${p}" value="${S.overall[p]||''}" placeholder="0"></div>`).join('')}</div>
@@ -777,7 +826,7 @@ function renderBudgets(c){
       :`<div class="bud" data-ec="${esc(r.cat.id)}" style="cursor:pointer"><div class="top2"><div class="ce" style="background:${r.cat.color}">${r.cat.emoji}</div><div class="nm">${esc(r.cat.name)} <small>no limit</small></div><span class="grade gN">–</span></div><div class="sub"><span>${inr(r.spent)} this ${PERIOD_LBL[r.cat.period]}</span><span>tap to set budget</span></div></div>`).join('')}
   </div>
   <div class="card tl"><h2>Grades 🎓</h2><p class="mini" style="margin-top:0">S/A = on pace or under · B/C = ahead of pace but under limit · D/F = over the limit. The dashed line is where you "should" be right now (time of day / week / month).</p></div>`;
-  $('#bNew').onclick=()=>editCat(null);
+  $('#bNew').onclick=()=>editCat(null);$('#bQs').onclick=quickStart;
   $$('[data-ec]').forEach(el=>el.onclick=()=>editCat(S.cats.find(x=>x.id===el.dataset.ec)));
   $('#ovSave').onclick=async()=>{for(const el of $$('[data-ov]')){const v=el.value===''?0:money(el.value);if(v===null){el.classList.add('bad');toast('Numbers only, ≥ 0 🧮','warn');return}S.overall[el.dataset.ov]=v}await saveS();toast('Totals saved. Discipline arc begins. 🧘');afterChange()};
 }
@@ -807,7 +856,9 @@ function renderCard(c){
   const d=myCardData(c);
   $('#view').innerHTML=`<div class="secthead"><h2>Your card 🃏</h2><span class="pill">${c.rar[2]} ${c.rar[1]}</span></div>
   ${cardHTML(d)}
-  <div class="row"><button class="btn g" id="shImg">📤 Share card</button><button class="btn c" id="toSquad">🏆 Compete</button></div>
+  <button class="btn mega p" id="invBtn">📣 INVITE & FLEX</button>
+  <p class="mini" style="text-align:center">Story-size image: your card + a QR code to the app. Perfect for Insta stories and WhatsApp status.</p>
+  <div class="row"><button class="btn g" id="shImg">📤 Share card only</button><button class="btn c" id="toSquad">🏆 Compete</button></div>
   <div class="card tl explain" style="margin-top:16px"><h2>How your scores work 🧠</h2>
     <p><b>🫶 GIVE (${c.give})</b> = % of what you have that you gave in 30 days, plus how many of the last 4 weeks you gave. 6% ≈ 50 pts, 10% ≈ 65, 20% ≈ 80. Weekly giving adds up to 20. "What you have" = your monthly money in, or what you spent + gave if that's higher. <i>Giving never lowers any other score.</i></p>
     <p><b>🧘 DISCIPLINE (${c.disc})</b> = average budget grade, judged against the clock. Under pace = 100.${c.sc.length?'':' <i>(Set budgets to unlock. Showing 50.)</i>'}</p>
@@ -818,8 +869,8 @@ function renderCard(c){
   </div>
   <div class="card tr"><h2>Badges 🏅 ${Object.keys(S.badges).length}/${BADGES.length}</h2><div class="badges">
     ${BADGES.map(b=>`<div class="bdg ${S.badges[b.id]?'':'lock'}" data-bd="${b.id}"><span>${b.e}</span>${esc(b.n)}</div>`).join('')}</div></div>`;
-  $('#shImg').onclick=async()=>{loading(true);try{const blob=await cardPNG(d);loading(false);shareFile(blob,'my-aura-card.png','My Aura card','My Aura card 🗿 GIVE '+d.g+' · AURA '+d.au)}catch(e){loading(false);console.error(e);toast('Image failed 😕','warn')}};
-  $('#toSquad').onclick=()=>go('squad');
+  $('#shImg').onclick=async()=>{loading(true);try{const blob=await cardPNG(d);loading(false);shareFile(blob,'my-aura-card.png','My Aura card','My Aura card 🗿 GIVE '+d.g+' · AURA '+d.au+' · '+SHARE_URL)}catch(e){loading(false);console.error(e);toast('Image failed 😕','warn')}};
+  $('#toSquad').onclick=()=>go('squad');$('#invBtn').onclick=invite;
   $$('[data-bd]').forEach(el=>el.onclick=()=>{const b=BADGES.find(x=>x.id===el.dataset.bd);toast(`${b.e} ${b.n}: ${b.d}${S.badges[b.id]?' ✅':' 🔒'}`)});
 }
 async function cardPNG(d){
@@ -879,6 +930,7 @@ function renderSquad(c){
     <div class="mid"><b>${esc(p.n)}${p.me?' (you)':''}</b><small>${TYPES[p.t].e} ${TYPES[p.t].n} · Aura ${p.au} · LV.${p.l}${p.me?'':' · '+ago(p.ts)}</small></div>
     <div class="sc"><b>${p.g}</b><small>🫶 ${p.gp}%</small></div></div>`).join('')}
   ${S.squad.length?'':`<div class="card empty"><span class="e">🦗</span><p>Your squad is empty. Lonely at the top.<br>Share your code with friends who have Aura Wallet.</p></div>`}
+  <button class="btn mega p" id="invBtn2" style="margin-bottom:16px">📣 INVITE FRIENDS</button>
   <div class="card tr"><h2>Add a friend ➕</h2><p class="mini" style="margin-top:-4px">Paste the code they sent you. Ask them to resend it to update their score.</p>
     <textarea class="inp" id="frCode" rows="3" placeholder="AURA1.xxxxx..."></textarea><button class="btn l" id="frAdd">Add to squad</button></div>
   <div class="card tl"><h2>Your code 📤</h2><p class="mini" style="margin-top:-4px">Send this so friends can rank you. Only scores and %s are shared. No ₹ amounts, no entries.</p>
@@ -886,8 +938,8 @@ function renderSquad(c){
     <div class="row"><button class="btn c" id="shCode">📤 Share code</button><button class="btn w" id="cpCode">📋 Copy</button></div></div>
   <p class="mini" style="text-align:center">Honor system. Proof photos 📸 on gives keep it real. Scores are self-reported.</p>`;
   const code=makeCode(c);
-  $('#cpCode').onclick=()=>copyText(code);
-  $('#shCode').onclick=async()=>{const text=`Rank me in Aura Wallet 🗿 My GIVE score is ${c.give}. Beat it.\n\n${code}`;if(navigator.share){try{await navigator.share({title:'My Aura code',text});return}catch(e){if(e.name==='AbortError')return}}copyText(text)};
+  $('#cpCode').onclick=()=>copyText(code);$('#invBtn2').onclick=invite;
+  $('#shCode').onclick=async()=>{const text=`Rank me in Aura Wallet 🗿 My GIVE score is ${c.give}. Beat it.\n\n${code}\n\nNo app yet? Get it free: ${SHARE_URL}`;if(navigator.share){try{await navigator.share({title:'My Aura code',text});return}catch(e){if(e.name==='AbortError')return}}copyText(text)};
   $('#frAdd').onclick=async()=>{const el=$('#frCode');try{const d=parseCode(el.value);if(!d.i)throw new Error('Code has no ID. Ask them to resend.');if(d.i===S.uid)throw new Error('That\'s your own code. Self-love is valid, but no. 🪞');
       const i=S.squad.findIndex(x=>x.i===d.i);const upd=i>=0;if(upd){if(d.ts<S.squad[i].ts)throw new Error('This code is older than what you have.');S.squad[i]=d}else{if(S.squad.length>=50)throw new Error('50 friends max. Popular much? 😎');S.squad.push(d)}
       await saveS();el.value='';confetti(innerWidth/2,innerHeight/3,['🤝','🏆','✨']);toast(upd?`${d.n} updated 🔄`:`${d.n} joined the squad 🤝 GIVE ${d.g}`);render()}
@@ -915,7 +967,8 @@ function renderSettings(){
     <button class="btn l" id="sSave">💾 Save</button></div>
   <div class="card tr"><h2>Daily reminder ⏰</h2>
     <label class="f">Remind me at</label><input class="inp" type="time" id="sRem" value="${S.remind}">
-    <a class="btn p" id="calA" href="${calLink()}" target="_blank" rel="noopener noreferrer">📅 Add daily reminder to Google Calendar</a>
+    ${isIOS()?`<a class="btn p" href="reminder.ics" target="_blank" rel="noopener noreferrer">📅 Add 9:30 PM reminder to iPhone Calendar</a><p class="mini">Fixed at 9:30 PM. Change the time in the Calendar app after adding.</p>`:''}
+    <a class="btn ${isIOS()?'w sm':'p'}" id="calA" href="${calLink()}" target="_blank" rel="noopener noreferrer">📅 Add daily reminder to Google Calendar</a>
     <button class="btn v" id="sNotif">🔔 App notifications</button>
     <p class="mini">The calendar one is the reliable one. Your + button also turns red and angry if you haven't logged by then.</p></div>
   <div class="card tl"><h2>Your data 🛟</h2><p class="mini" style="margin-top:-4px">Everything lives only on this phone. ${(()=>{const b=backupInfo();return S.lastBackup?'Last backup: '+(b.days===0?'today ✅':b.days+' days ago'+(b.days>=7?' 😬':'')):'Never backed up 😬'})()} · The app reminds you weekly.</p>
@@ -923,12 +976,15 @@ function renderSettings(){
     <button class="btn w" id="sBk">💾 Save backup</button>
     <div class="photo-pick" style="margin-top:12px">♻️ Restore backup<input type="file" accept=".json,application/json" id="sRs"></div>
     <button class="btn r" id="sWipe">💣 Delete everything</button></div>
-  <div class="card tr"><h2>Privacy & safety 🔐</h2>
+  <button class="btn c" onclick="installGuide()" style="margin-bottom:12px">📲 How to install (Android / iPhone)</button>
+  <button class="btn l" onclick="go('learn')">🧠 Brain food: tips, quotes, money dictionary</button>
+  <div class="card tr" style="margin-top:16px"><h2>Privacy & safety 🔐</h2>
     <p class="mini" style="margin-top:-4px">No bank link · no server · no account · no tracking. Data stays on this phone. ${S.agreed?'You accepted v'+esc(S.agreed.split('|')[0])+' on '+esc(S.agreed.split('|')[1]||'')+'.':''}</p>
     <button class="btn w" onclick="openLegal()">📜 Read Privacy Policy & Terms</button>
     <p class="mini">Test it: turn on aeroplane mode. The app still works, because there is nothing to connect to.</p></div>
   ${DONATE.upi?`<button class="btn g" onclick="go('support')">☕ Support the creator</button>`:''}
-  <p class="mini" style="text-align:center">Aura Wallet v1.2 · built different 🗿</p>`;
+  ${CREATOR.handle?`<p class="mini" style="text-align:center">Made by ${CREATOR.link?`<a href="${esc(CREATOR.link)}" target="_blank" rel="noopener noreferrer">${esc(CREATOR.handle)}</a>`:esc(CREATOR.handle)} 🗿</p>`:''}
+  <p class="mini" style="text-align:center">Aura Wallet v1.5 · built different 🗿</p>`;
   $$('[data-av]').forEach(b=>b.onclick=async()=>{S.avatar=b.dataset.av;S.avatarImg='';await saveS();render()});
   $('#sAvImg').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{S.avatarImg=await squareDataURL(f);await saveS();render();toast('Looking sharp. 😎')}catch(err){toast('Image failed 😕','warn')}};
   const clr=$('#sAvClr');if(clr)clr.onclick=async()=>{S.avatarImg='';await saveS();render()};
@@ -958,6 +1014,101 @@ async function restore(file){if(!file)return;try{const j=JSON.parse(await file.t
   await dbClear('entries');for(const e of good)await dbPut('entries',e);S.setup=true;await saveS();E=good;loading(false);toast(`Restored ${good.length} entries ✅`);lastLevel=null;go('home')}
   catch(e){loading(false);toast(e.message||'Restore failed','warn')}}
 
+/* =================== BRAIN FOOD (tips, quotes, dictionary) =================== */
+const dayNum=()=>Math.floor(pd(today()).getTime()/864e5);
+let LN={tab:'tips',q:'',tipI:null,quoI:null,open:null};
+function smartNote(c){const top=c.catRows.find(r=>r.spent>0);if(!top||!c.spentM)return'';const pct=Math.round(top.spent/c.spentM*100);
+  return pct>=35?`Observation: ${top.c.emoji} ${esc(top.c.name)} is ${pct}% of your spending this month. Just saying. 👀`:''}
+function renderLearn(c){
+  if(LN.tipI==null)LN.tipI=dayNum()%TIPS.length;if(LN.quoI==null)LN.quoI=dayNum()%QUOTES.length;
+  const tabs=[['tips','💡 Tips'],['quotes','💬 Quotes'],['dict','📖 Dictionary']];
+  let body='';
+  if(LN.tab==='tips'){const sn=smartNote(c);body=`<div class="card tl" style="background:#EFFFD0"><h2>Tip #${LN.tipI+1} 💡</h2><p style="font-size:18px;font-weight:600;margin:6px 0">${esc(TIPS[LN.tipI])}</p>
+      <div class="row"><button class="btn w sm" id="tPrev">← Prev</button><button class="btn l sm" id="tNext">Another one →</button></div></div>
+    ${sn?`<div class="card tr" style="background:#E3F8FF"><b>${sn}</b></div>`:''}
+    <div class="card tr"><h2>All tips (${TIPS.length})</h2>${TIPS.map((t,i)=>`<p style="margin:8px 0;font-size:14px"><b>${i+1}.</b> ${esc(t)}</p>`).join('')}</div>`}
+  else if(LN.tab==='quotes'){const q=QUOTES[LN.quoI];body=`<div class="card tl" style="background:#FFF6C9;text-align:center"><div style="font-size:50px">💬</div><p class="bang" style="font-size:26px;line-height:1.15;margin:6px 0">"${esc(q[0])}"</p><p class="mini">— ${esc(q[1])}</p>
+      <div class="row"><button class="btn w sm" id="qPrev">← Prev</button><button class="btn g sm" id="qNext">Another one →</button></div><button class="btn c sm" id="qShare">📤 Share this</button></div>`}
+  else{const ql=LN.q.toLowerCase();const list=DICT.filter(d=>!ql||d[0].toLowerCase().includes(ql)||d[1].toLowerCase().includes(ql)||d[2].toLowerCase().includes(ql));
+    body=`<input class="inp" id="dq" placeholder="🔍 Search ${DICT.length} words (EMI, KYC, SIP...)" value="${esc(LN.q)}" style="margin-bottom:12px">
+    ${list.length?list.map(d=>`<div class="card" style="padding:10px 14px;margin-bottom:10px"><div class="bang" style="font-size:24px">${esc(d[0])}${d[1]?` <small style="font-family:Fredoka;font-size:13px;opacity:.7;letter-spacing:0">${esc(d[1])}</small>`:''}</div><div style="font-weight:500;font-size:15px">${esc(d[2])}</div></div>`).join(''):`<div class="card empty"><span class="e">🤷</span><p>Not in the dictionary. Even the moai doesn't know that one.</p></div>`}`}
+  $('#view').innerHTML=`<div class="secthead"><h2>Brain food 🧠</h2><button class="chip" onclick="go('home')">← Home</button></div>
+  <div class="chips" style="margin-bottom:14px">${tabs.map(([k,n])=>`<button class="chip ${LN.tab===k?'on':''}" data-lt="${k}" style="${LN.tab===k?'background:var(--y)':''}">${n}</button>`).join('')}</div>
+  ${body}<p class="mini" style="text-align:center">General money education, simplified and joked about. Not personal financial advice. Rules differ by bank and change over time, so check before acting.</p>`;
+  $$('[data-lt]').forEach(b=>b.onclick=()=>{LN.tab=b.dataset.lt;renderLearn(c);popAll()});
+  const mv=(k,arr,d)=>{LN[k]=(LN[k]+d+arr.length)%arr.length;renderLearn(c)};
+  if($('#tNext')){$('#tNext').onclick=()=>mv('tipI',TIPS,1);$('#tPrev').onclick=()=>mv('tipI',TIPS,-1)}
+  if($('#qNext')){$('#qNext').onclick=()=>mv('quoI',QUOTES,1);$('#qPrev').onclick=()=>mv('quoI',QUOTES,-1);
+    $('#qShare').onclick=async()=>{const q=QUOTES[LN.quoI];const text=`"${q[0]}" — ${q[1]}\n\nvia Aura Wallet 🗿 ${SHARE_URL}`;if(navigator.share){try{await navigator.share({text});return}catch(e){if(e.name==='AbortError')return}}copyText(text)}}
+  const dq=$('#dq');if(dq)dq.oninput=()=>{LN.q=dq.value;const p=dq.selectionStart;renderLearn(c);const n=$('#dq');n.focus();n.setSelectionRange(p,p)};
+}
+/* =================== INSTALL / PLATFORM / SHARING =================== */
+const APP_URL='https://alexperiment9-maker.github.io/Aura-Wallet/';
+const SHARE_URL=APP_URL+'welcome.html';
+/* Creator credit. Fill in to show "Made by ..." in the app, on invite images and the welcome page. Empty = hidden. */
+const CREATOR={handle:'',link:''};
+const isStandalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
+const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const inAppBrowser=()=>/Instagram|FBAN|FBAV|FB_IAB|Snapchat|Line\/|LinkedInApp/i.test(navigator.userAgent);
+let deferredPrompt=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(S.setup&&cur==='home'&&!openCount())render()});
+addEventListener('appinstalled',()=>{deferredPrompt=null;toast('Installed. Open it from your home screen. 🗿')});
+function installDue(){if(isStandalone()||!S.setup)return false;const d=S.seen.instHide;return !d||!validYmd(d)||diffDays(d,today())>=3}
+async function doInstall(){
+  if(deferredPrompt){const p=deferredPrompt;deferredPrompt=null;
+    try{p.prompt();const r=await p.userChoice;if(r&&r.outcome==='accepted'){toast('Installing... wait for the 🗿 icon, then open it from there.');return}}catch(e){}}
+  installGuide();
+}
+function installGuide(){
+  const ios=isIOS(),iab=inAppBrowser();let tab=ios?'ios':'android';
+  const draw=()=>{modal(`<div style="text-align:center;font-size:56px">📲</div><h2>Install Aura Wallet</h2>
+    <p class="mini" style="text-align:center">Free. No Play Store or App Store needed: Chrome and Safari can install web apps directly. It opens full screen and works offline.</p>
+    ${iab?`<div class="nag" style="margin:10px 0"><span style="font-size:24px">⚠️</span><div>You're inside another app's browser. Open this page in ${ios?'Safari':'Chrome'} first.<br><small>Tap ⋮ or ⋯ → "Open in browser"</small></div></div>`:''}
+    <div class="seg" style="margin-top:10px"><button class="${tab==='android'?'on sp':''}" data-it="android">🤖 ANDROID</button><button class="${tab==='ios'?'on gv':''}" data-it="ios">🍎 IPHONE</button></div>
+    ${tab==='ios'?`<ol class="steps"><li>Open the link in <b>Safari</b>.</li><li>Tap <b>Share</b> (the square with an arrow ⬆️).</li><li>Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>.</li><li>Open it from the 🗿 icon on your Home Screen.</li></ol>
+      <p class="mini">iPhone tip: always open it from the Home Screen icon. Safari can clear data of websites you haven't opened for a while. Back up anyway.</p>`
+    :`<ol class="steps"><li>Open the link in <b>Chrome</b>. Inside WhatsApp or Instagram: ⋮ → <b>Open in Chrome</b>.</li><li>Tap ⋮ → <b>Add to Home screen</b> → <b>Install</b>.</li><li>Wait for the 🗿 icon, then open it from your home screen.</li><li>"Could not open app"? Choose <b>Create shortcut</b> instead. Same app.</li></ol>`}
+    <button class="btn c sm" id="igCopy">🔗 Copy app link</button><button class="btn w sm" onclick="closeModal()">Close</button>`);
+    $$('[data-it]').forEach(b=>b.onclick=()=>{tab=b.dataset.it;draw()});$('#igCopy').onclick=()=>copyText(SHARE_URL)};
+  draw();
+}
+function rrect(x,X,Y,w,h,r){x.beginPath();if(x.roundRect)x.roundRect(X,Y,w,h,r);else x.rect(X,Y,w,h)}
+function qrCanvas(text,size){
+  const q=qrcode(0,'M');q.addData(text);q.make();const n=q.getModuleCount(),m=3,cell=Math.max(2,Math.floor(size/(n+m*2)));
+  const cv=document.createElement('canvas');cv.width=cv.height=cell*(n+m*2);const x=cv.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);x.fillStyle='#111';
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))x.fillRect((c+m)*cell,(r+m)*cell,cell,cell);return cv;
+}
+async function storyPNG(d){
+  try{await document.fonts.load('40px Bangers');await document.fonts.load('700 30px Fredoka')}catch(e){}
+  const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  x.fillStyle='#FFE66D';x.fillRect(0,0,W,H);
+  x.save();x.translate(W/2,820);x.fillStyle='#FFD23F';for(let i=0;i<36;i+=2){x.beginPath();x.moveTo(0,0);x.arc(0,0,2400,i*Math.PI/18,(i+1)*Math.PI/18);x.closePath();x.fill()}x.restore();
+  const g=x.createRadialGradient(W/2,H+200,100,W/2,H+200,1100);g.addColorStop(0,'rgba(255,93,162,.45)');g.addColorStop(1,'rgba(255,93,162,0)');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.textAlign='center';x.textBaseline='alphabetic';x.lineJoin='round';
+  x.font='108px Bangers';x.fillStyle='#111';x.fillText("I'M FARMING AURA",W/2+7,157);x.lineWidth=12;x.strokeStyle='#111';x.strokeText("I'M FARMING AURA",W/2,150);x.fillStyle='#fff';x.fillText("I'M FARMING AURA",W/2,150);
+  x.font='700 38px Fredoka';x.fillStyle='#111';x.fillText('by tracking money and giving back 🫶',W/2,215);
+  const cb=await cardPNG(d);const u=URL.createObjectURL(cb);const im=new Image();im.src=u;await im.decode();
+  const cw=760,ch=cw*im.height/im.width;x.save();x.translate(W/2,262+ch/2);x.rotate(-0.03);x.drawImage(im,-cw/2,-ch/2,cw,ch);x.restore();URL.revokeObjectURL(u);
+  let y=262+ch+40;const bx=70,bw=W-140,bh=330;
+  x.fillStyle='#111';rrect(x,bx+10,y+10,bw,bh,36);x.fill();x.fillStyle='#FFFDF5';rrect(x,bx,y,bw,bh,36);x.fill();x.lineWidth=7;x.strokeStyle='#111';x.stroke();
+  x.drawImage(qrCanvas(SHARE_URL,260),bx+34,y+35,260,260);
+  x.textAlign='left';x.fillStyle='#111';x.font='62px Bangers';x.fillText('GET AURA WALLET',bx+322,y+98);
+  x.font='700 31px Fredoka';['✅ Free, no ads','🏦 No bank link','🔐 No login, no tracking','📴 Works offline'].forEach((t,i)=>x.fillText(t,bx+322,y+152+i*44));
+  y+=bh+70;x.textAlign='center';x.font='700 36px Fredoka';x.fillText(d.g>0?`My GIVE score: ${d.g}. Beat it. 😤`:'Your move. 😤',W/2,y);
+  x.font='600 27px Fredoka';x.fillText(SHARE_URL.replace('https://',''),W/2,y+48);
+  if(CREATOR.handle){x.font='30px Bangers';x.fillText('MADE BY '+String(CREATOR.handle).toUpperCase()+' 🗿',W/2,H-50)}
+  return await new Promise(r=>cv.toBlob(r,'image/png'));
+}
+async function invite(){
+  loading(true);
+  try{const d=myCardData(calc());const blob=await storyPNG(d);loading(false);
+    const text=`I'm farming aura on Aura Wallet 🗿 My GIVE score is ${d.g}. Free, no bank link, no login. Beat me: ${SHARE_URL}`;
+    const f=new File([blob],'aura-wallet-invite.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],text,title:'Aura Wallet'});boom('📣');toast('Sent. Aura delivered. 🗿');return}catch(e){if(e.name==='AbortError')return}}
+    download(blob,'aura-wallet-invite.png');copyText(text);
+  }catch(e){loading(false);console.error(e);toast('Image failed 😕','warn')}
+}
 /* =================== SUPPORT THE CREATOR =================== */
 let SUP={amt:49};
 function upiLink(amt){const q=new URLSearchParams({pa:DONATE.upi,pn:DONATE.name||'Aura Wallet',cu:'INR',tn:DONATE.note});if(amt)q.set('am',Number(amt).toFixed(2));return 'upi://pay?'+q.toString().replace(/\+/g,'%20')}
@@ -971,16 +1122,16 @@ function renderSupport(){
   <div class="card tr"><label class="f" style="margin-top:0">Pick an amount</label>
     <div class="chips">${tiers.map(([a,n])=>`<button class="chip ${SUP.amt==a?'on':''}" data-sa="${a}" style="${SUP.amt==a?'background:var(--gold)':''}">${n} ₹${a}</button>`).join('')}</div>
     <label class="f">Or any amount (₹)</label><input class="inp amt-inp" id="supAmt" type="number" inputmode="decimal" min="1" value="${SUP.amt||''}" placeholder="0">
-    <a class="btn mega g" id="supPay" href="#">PAY WITH UPI 🫶</a>
-    <p class="mini" style="text-align:center">Opens GPay / PhonePe / Paytm. You confirm the payment there. Nothing is charged from inside this app.</p>
+    ${isIOS()?`<label class="f">Pay with</label><div class="row">${[['tez://upi/pay','GPay'],['phonepe://pay','PhonePe'],['paytmmp://pay','Paytm']].map(([u,n])=>`<a class="btn g sm" data-ua="${u}" href="#">${n}</a>`).join('')}</div>`:`<a class="btn mega g" id="supPay" href="#">PAY WITH UPI 🫶</a>`}
+    <p class="mini" style="text-align:center">${isIOS()?'Pick the UPI app you have. ':''}Opens GPay / PhonePe / Paytm. You confirm the payment there. Nothing is charged from inside this app.</p>
     <label class="f">Button didn't open anything?</label>
     <button class="btn w sm" id="supCopy" style="margin-top:0">📋 Copy UPI ID, then paste it in your UPI app</button></div>
   <p class="mini" style="text-align:center">Honest note: this is a tip for the app maker. It is not charity, so it does not count toward your 🫶 GIVE score.</p>`;
   const inp=$('#supAmt'),pay=$('#supPay');
-  const sync=()=>{const v=money(inp.value);SUP.amt=v&&v>=1&&v<=100000?v:null;pay.href=SUP.amt?upiLink(SUP.amt):'#'};sync();
+  const sync=()=>{const v=money(inp.value);SUP.amt=v&&v>=1&&v<=100000?v:null;const qs=SUP.amt?upiLink(SUP.amt).split('?')[1]:'';if(pay)pay.href=SUP.amt?upiLink(SUP.amt):'#';$$('[data-ua]').forEach(a=>a.href=SUP.amt?a.dataset.ua+'?'+qs:'#')};sync();
   inp.oninput=sync;
   $$('[data-sa]').forEach(b=>b.onclick=()=>{SUP.amt=+b.dataset.sa;renderSupport()});
-  pay.onclick=e=>{sync();if(!SUP.amt){e.preventDefault();inp.classList.add('bad');setTimeout(()=>inp.classList.remove('bad'),500);toast('Enter ₹1 to ₹1,00,000 🧮','warn');return}toast('Opening your UPI app... 🫶','gold')};
+  const onPay=e=>{sync();if(!SUP.amt){e.preventDefault();inp.classList.add('bad');setTimeout(()=>inp.classList.remove('bad'),500);toast('Enter ₹1 to ₹1,00,000 🧮','warn');return}toast('Opening your UPI app... 🫶','gold')};if(pay)pay.onclick=onPay;$$('[data-ua]').forEach(a=>a.onclick=onPay);
   $('#supCopy').onclick=()=>copyText(DONATE.upi);
 }
 /* =================== ONBOARDING =================== */
@@ -1008,7 +1159,7 @@ function onboard(){
       S.name=nm.slice(0,24);S.avatar=av;S.income=inc;S.overall.daily=day;
       S.cats=[...PRESETS.filter(p=>pickSet.has(p.id)).map(p=>({...p,budget:0,sys:false})),{...OTHER}];S.setup=true;await saveS();
       closeModal();boom('🗿');toast(`Welcome, ${S.name}. Aura farming begins.`);afterChange();
-      setTimeout(()=>modal(`<h2>Pro tips 🗿</h2><p>🫶 Log every give. It's the score that matters.</p><p>📊 Set category budgets in the <b>Budgets</b> tab.</p><p>⏰ Turn on the daily reminder in ⚙️.</p><p>🏆 Share your code in <b>Squad</b>.</p><button class="btn g" onclick="closeModal()">Got it</button>`),1200)};
+      setTimeout(()=>{modal(`<h2>Pro tips 🗿</h2><p>🫶 Log every give. It's the score that matters.</p><p>📊 Set category budgets in the <b>Budgets</b> tab.</p><p>⏰ Turn on the daily reminder in ⚙️.</p><p>🏆 Share your code in <b>Squad</b>.</p><button class="btn mega l" id="tQs">⚡ QUICK START</button><p class="mini">30 seconds: guess last month's spend, get budgets instantly.</p><button class="btn w sm" onclick="closeModal()">Later</button>`);const q=$('#tQs');if(q)q.onclick=quickStart},1200)};
   };draw();
 }
 

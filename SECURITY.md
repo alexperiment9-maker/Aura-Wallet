@@ -6,7 +6,8 @@ Honest description of how the app is built, what protects users, and what does n
 
 - 100% client-side. The app is a set of static files (HTML, fonts, icons, a service worker). There is no backend, database, API, account system or analytics.
 - All user data is kept in the browser's IndexedDB on the user's own device.
-- No third-party code is loaded at runtime. Fonts are bundled.
+- No third-party code is loaded from outside. Fonts and the QR code library (`qr.js`, MIT licence, by Kazuhiko Arase) are bundled in the repo.
+- The landing page (`welcome.html`) has the same security rule and no trackers.
 
 ## Protections in place
 
@@ -25,6 +26,7 @@ Honest description of how the app is built, what protects users, and what does n
 - The CSP allows inline scripts and styles (`'unsafe-inline'`) because the app is a single file. Risk is reduced by escaping all user text and blocking outside connections.
 - Browsers can clear site storage (for example when the device is low on space, or if the user clears browsing data). Backups are the only recovery.
 - The web host can see standard request logs (IP address, time, browser) for the download of the app files. It never receives user entries.
+- On iPhone, Safari may clear data of websites that are not opened for a while. Using the app from the Home Screen icon and making backups is the protection.
 - UPI tip links hand over to the user's UPI app. The app cannot confirm or see payments.
 
 ## How anyone can verify

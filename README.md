@@ -15,10 +15,27 @@ A free, goofy, manual expense tracker that scores you on budgeting and, most of 
 - Squad: friends swap codes and are ranked by the share of their money they give, not the amount.
 - Badges, levels, streaks, daily reminder, weekly backup reminder.
 - Backup / restore and CSV export.
+- Brain food: daily money tip, quotes and a goofy dictionary of 50+ banking words (general education, not advice).
 
 ## Install
 
-Open the app link in Chrome (Android) → menu → **Add to Home screen** → **Install**. On iPhone: Safari → Share → **Add to Home Screen**.
+Start here: **https://alexperiment9-maker.github.io/Aura-Wallet/welcome.html**
+
+- **Android:** open in Chrome → ⋮ → **Add to Home screen** → **Install**. If it says "Could not open app", choose **Create shortcut**.
+- **iPhone:** open in Safari → **Share** → **Add to Home Screen** → **Add**. Always open it from the Home Screen icon.
+
+Opening the link inside WhatsApp or Instagram? Switch to Chrome or Safari first.
+
+## Sharing
+
+- **Invite & flex** (Card or Squad tab) makes a story-size image with your card and a QR code to the app.
+- Links show a preview image in WhatsApp and other apps.
+
+## Files
+
+- `index.html`: the app. `welcome.html`: the landing page to share.
+- `qr.js`: QR code library by Kazuhiko Arase (MIT licence), bundled so nothing loads from outside.
+- `reminder.ics`: daily 9:30 PM calendar reminder for iPhone.
 
 ## Documents
 
