@@ -14,6 +14,7 @@ A free, goofy, manual expense tracker that scores you on budgeting and, most of 
 - A collectible-style stat card you can share as an image.
 - Squad: friends swap codes and are ranked by the share of their money they give, not the amount.
 - Badges, levels, streaks, daily reminder, weekly backup reminder.
+- Advisor tab: money-health score, charts (day by day, by category, month by month, weekday), findings on where you overspend, and a cut plan. All worked out on the phone.
 - Repeating spends (rent, subscriptions, EMIs) logged automatically each month.
 - Monthly recap with a shareable story image (percentages only, no ₹ amounts).
 - Four vibes: Goofy, Nonchalant, Pookie and Chad (with Stoic quotes). Jokes in English or Hinglish.

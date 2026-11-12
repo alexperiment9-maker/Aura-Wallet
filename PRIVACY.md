@@ -1,6 +1,6 @@
 # Aura Wallet: Privacy Policy
 
-Version 1.2 · Effective 10 November 2026
+Version 1.3 · Effective 10 November 2026
 
 Plain-language and complete. If something here is unclear, treat the stricter reading as the intended one.
 
