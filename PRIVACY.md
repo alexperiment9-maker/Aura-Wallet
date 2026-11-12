@@ -1,6 +1,6 @@
 # Aura Wallet: Privacy Policy
 
-Version 1.3 · Effective 10 November 2026
+Version 1.4 · Effective 10 November 2026
 
 Plain-language and complete. If something here is unclear, treat the stricter reading as the intended one.
 
@@ -12,7 +12,7 @@ Plain-language and complete. If something here is unclear, treat the stricter re
 
 ## 2. What is stored, and where
 
-- Stored only on your device (browser storage called IndexedDB): your name and avatar, the monthly 'money in' figure if you enter it, budgets and categories, every spend, give and zero-spend entry, photos you attach, badges, friends' Squad cards you added, repeating spends you set up, look and language choices, reminder time, backup date.
+- Stored only on your device (browser storage called IndexedDB): your name and avatar, the monthly 'money in' figure if you enter it, budgets and categories, every spend, give and zero-spend entry, photos you attach, badges, friends' Squad cards you added, repeating spends you set up, your chosen 'thing' (name, price and optional photo), look and language choices and other settings, reminder time, backup date.
 - None of this is uploaded. There is no cloud copy.
 - The data on the device is not encrypted and the app has no PIN lock. Anyone who can unlock your phone and open the app can read it. Your phone's screen lock is the protection.
 

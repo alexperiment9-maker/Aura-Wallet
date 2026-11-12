@@ -1,6 +1,6 @@
 # Aura Wallet: Terms of Use
 
-Version 1.3 · Effective 10 November 2026
+Version 1.4 · Effective 10 November 2026
 
 By using Aura Wallet you agree to these terms and to the Privacy Policy (PRIVACY.md). If you do not agree, do not use the app.
 
